@@ -1,0 +1,17 @@
+{
+  "name": "Lịch Học Minh Giang",
+  "short_name": "Lịch Học 1/6",
+  "description": "Lịch học & nhắc nhở Phạm Minh Giang - Lớp 1/6",
+  "start_url": "./lich-hoc.html",
+  "display": "standalone",
+  "background_color": "#f0f7ff",
+  "theme_color": "#1976D2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2913/2913520.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

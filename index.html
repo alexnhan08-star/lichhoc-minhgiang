@@ -2,239 +2,267 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Lịch Học Minh Giang | Lớp 1/6</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch Học Minh Giang</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1976D2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="blue">
-  <meta name="apple-mobile-web-app-title" content="Lịch Học Minh Giang">
+  <meta name="apple-mobile-web-app-title" content="Lịch Học MG">
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, Roboto, sans-serif; }
-    body { background: #f0f7ff; color: #1a237e; padding-bottom: 80px; }
+    body { background: #f0f7ff; color: #1a237e; padding-bottom: 90px; }
     .header { background: linear-gradient(135deg, #1976D2, #1565C0); color: white; padding: 20px; text-align: center; border-radius: 0 0 24px 24px; }
     .header h1 { font-size: 20px; margin-bottom: 4px; }
     .header p { opacity: 0.9; font-size: 14px; }
-    .thoi-gian-hien-tai { background: white; margin: 16px; padding: 16px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; }
-    .gio-hien-tai { font-size: 28px; font-weight: bold; color: #d32f2f; }
-    .ngay-hom-nay { font-size: 14px; color: #666; margin-top: 6px; }
-    .thong-bao-nhac { background: #fff3e0; border-left: 4px solid #fb8c00; margin: 12px 16px; padding: 14px; border-radius: 8px; display: none; }
-    .thong-bao-nhac h3 { color: #e65100; font-size: 15px; margin-bottom: 4px; }
+    .time-box { background: white; margin: 16px; padding: 16px; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; }
+    .clock { font-size: 28px; font-weight: bold; color: #d32f2f; }
+    .date { font-size: 14px; color: #666; margin-top: 6px; }
+    .alert { background: #fff3e0; border-left: 4px solid #fb8c00; margin: 12px 16px; padding: 14px; border-radius: 8px; display: none; }
+    .alert h3 { color: #e65100; font-size: 15px; margin-bottom: 4px; }
     .container { padding: 0 12px; }
-    .tab-bar { display: flex; background: white; border-radius: 12px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 500; color: #666; transition: all 0.2s; }
+    .tabs { display: flex; background: white; border-radius: 12px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 500; color: #666; }
     .tab.active { background: #1976D2; color: white; }
-    .bang-lich { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px; }
-    .bang-lich h2 { font-size: 17px; margin-bottom: 12px; color: #1565C0; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th, td { border: 1px solid #e3f2fd; padding: 10px 6px; text-align: center; }
+    .card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px; }
+    .card h2 { font-size: 17px; margin-bottom: 12px; color: #1565C0; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    th, td { border: 1px solid #e3f2fd; padding: 8px 4px; text-align: center; vertical-align: top; }
     th { background: #e3f2fd; font-weight: 600; }
-    .mon-hoc { font-size: 12px; line-height: 1.4; }
-    .gio-hoc { background: #e8f5e9; border-radius: 8px; padding: 12px; margin-bottom: 16px; }
-    .gio-hoc h3 { font-size: 15px; margin-bottom: 8px; color: #2e7d32; }
-    .item-gio { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #c8e6c9; }
-    .item-gio:last-child { border-bottom: none; }
-    .chu-y { background: #eef2ff; padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
-    .nut-cai-dat { position: fixed; bottom: 20px; right: 20px; background: #1976D2; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-size: 14px; box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4); cursor: pointer; }
+    .session-am { background: #e8f5e9; color: #2e7d32; font-weight: 600; width: 12%; }
+    .session-pm { background: #f3e5f5; color: #7b1fa2; font-weight: 600; width: 12%; }
+    .event { padding: 4px 0; line-height: 1.4; }
+    .time { font-weight: bold; }
+    .reminder-list { line-height: 2; padding-left: 20px; }
+    .install-btn { position: fixed; bottom: 20px; right: 20px; background: #1976D2; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-size: 14px; box-shadow: 0 4px 12px rgba(25,118,210,0.4); cursor: pointer; display: none; }
     .hidden { display: none !important; }
+    .highlight { background: #fff9c4; font-weight: bold; }
   </style>
 </head>
 <body>
 
 <div class="header">
   <h1>📚 Lịch Học Phạm Minh Giang</h1>
-  <p>Lớp 1/6 — Trường Tiểu học Ngô Quyền</p>
+  <p>Lớp 1/6 — Cập nhật đầy đủ sáng & chiều</p>
 </div>
 
-<div class="thoi-gian-hien-tai">
-  <div class="gio-hien-tai" id="gioHienTai">--:--</div>
-  <div class="ngay-hom-nay" id="ngayHomNay">Đang tải...</div>
+<div class="time-box">
+  <div class="clock" id="clock">--:--</div>
+  <div class="date" id="date">Đang tải...</div>
 </div>
 
-<div class="thong-bao-nhac" id="thongBaoNhac">
-  <h3>⏰ Nhắc nhở đi học!</h3>
-  <p id="noiDungNhac"></p>
+<div class="alert" id="alertBox">
+  <h3>⏰ Nhắc nhở</h3>
+  <p id="alertText"></p>
 </div>
 
 <div class="container">
-  <div class="tab-bar">
-    <div class="tab active" data-tab="lich">Lịch học</div>
-    <div class="tab" data-tab="gio">Giờ học</div>
-    <div class="tab" data-tab="chu-y">Chú ý</div>
+  <div class="tabs">
+    <div class="tab active" data-tab="schedule">Lịch tuần</div>
+    <div class="tab" data-tab="remind">Giờ nhắc</div>
+    <div class="tab" data-tab="info">Ghi chú</div>
   </div>
 
-  <!-- BẢNG LỊCH HỌC -->
-  <div class="tab-content" id="tab-lich">
-    <div class="bang-lich">
-      <h2>📅 Lịch học tuần</h2>
+  <!-- LỊCH TUẦN -->
+  <div class="tab-content" id="tab-schedule">
+    <div class="card">
+      <h2>📅 Lịch học đầy đủ</h2>
       <table>
         <tr>
           <th>Buổi</th>
-          <th>Thứ 2</th>
-          <th>Thứ 3</th>
-          <th>Thứ 4</th>
-          <th>Thứ 5</th>
-          <th>Thứ 6</th>
+          <th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th>
         </tr>
         <tr>
-          <th rowspan="2" style="background:#c8e6c9; color:#2e7d32;">Sáng</th>
-          <td class="mon-hoc">HĐTN<br>Tiếng Việt<br>Toán<br>GDTC</td>
-          <td class="mon-hoc">Tiếng Việt<br>Toán<br>Bài TC</td>
-          <td class="mon-hoc">Tiếng Việt<br>Toán<br>Mỹ thuật<br>Tạo học</td>
-          <td class="mon-hoc">Tiếng Việt<br>Đọc<br>Tạo học<br>TNXH</td>
-          <td class="mon-hoc">Tiếng Việt<br>Âm nhạc<br>TNXH</td>
+          <td class="session-am">Sáng</td>
+          <td>
+            <div class="event"><span class="time">7h15</span><br>Đi học</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">7h15</span><br>Đi học</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">7h15</span><br>Đi học</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">7h45</span><br>Đi học</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">7h45</span><br>Đi học</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">6h30–7h30</span><br>🏊 Học bơi</div>
+            <div class="event"><span class="time">8h00–9h00</span><br>🎹 Học đàn</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">6h30–7h30</span><br>🏊 Học bơi</div>
+            <div class="event"><span class="time">8h00–11h00</span><br>🎨 Học vẽ</div>
+          </td>
         </tr>
-        <tr style="background:#f9f9f9;"></tr>
         <tr>
-          <th rowspan="2" style="background:#e1bee7; color:#7b1fa2;">Chiều</th>
-          <td class="mon-hoc">GDTC<br>TNXH<br>Tiếng Anh</td>
-          <td class="mon-hoc">GDTC<br>Tiếng Việt<br>Bài TC</td>
-          <td class="mon-hoc">Tiếng Việt<br>TBTY<br>GDTC</td>
-          <td class="mon-hoc">Tiếng Việt<br>Âm nhạc<br>Bài TC</td>
-          <td class="mon-hoc">Tiếng Việt<br>HĐTN</td>
+          <td class="session-pm">Chiều</td>
+          <td>
+            <div class="event"><span class="time">17h–19h</span><br>✍️ Học chữ</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">16h30–17h30</span><br>🎹 Học đàn</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">17h30–19h</span><br>🇬🇧 Tiếng Anh</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">17h–19h</span><br>✍️ Học chữ</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">17h–19h</span><br>✍️ Học chữ</div>
+          </td>
+          <td>
+            <div class="event"><span class="time">17h30–19h</span><br>🇬🇧 Tiếng Anh</div>
+          </td>
+          <td>—</td>
         </tr>
       </table>
     </div>
   </div>
 
-  <!-- THỜI GIAN HỌC -->
-  <div class="tab-content hidden" id="tab-gio">
-    <div class="gio-hoc">
-      <h3>🕐 Thời gian chính</h3>
-      <div class="item-gio"><span>Buổi sáng</span><strong>7h15 – 10h30</strong></div>
-      <div class="item-gio"><span>Buổi chiều</span><strong>13h45 – 16h20</strong></div>
-      <div class="item-gio" style="color:#d32f2f; font-weight:500;"><span>Thứ 5 & Thứ 6</span><strong>Bắt đầu 7h45</strong></div>
-    </div>
-    <div class="bang-lich">
-      <h2>🔔 Thời điểm nhắc nhở</h2>
-      <ul style="padding-left: 20px; line-height: 2;">
-        <li><strong>Buổi sáng</strong>: Nhắc 6h30 & 7h00</li>
-        <li><strong>Buổi chiều</strong>: Nhắc 13h00 & 13h30</li>
-        <li><strong>Thứ 7, Chủ nhật</strong>: Không nhắc (nghỉ học)</li>
+  <!-- LỊCH NHẮC -->
+  <div class="tab-content hidden" id="tab-remind">
+    <div class="card">
+      <h2>🔔 Thời gian nhắc nhở tự động</h2>
+      <ul class="reminder-list">
+        <li><strong>Thứ 2,3,4 sáng</strong>: Nhắc 6h30 & 7h00 — Đi học 7h15</li>
+        <li><strong>Thứ 5,6 sáng</strong>: Nhắc 6h45 & 7h15 — Đi học 7h45</li>
+        <li><strong>Thứ 7 sáng</strong>: Nhắc 5h50 — Học bơi 6h30<br>Nhắc 7h20 — Học đàn 8h00</li>
+        <li><strong>Chủ nhật sáng</strong>: Nhắc 5h50 — Học bơi 6h30<br>Nhắc 7h10 — Học vẽ 8h00</li>
+        <li><strong>Chiều T2,T5,T6</strong>: Nhắc 16h30 — Học chữ 17h00</li>
+        <li><strong>Chiều T3</strong>: Nhắc 16h00 — Học đàn 16h30</li>
+        <li><strong>Chiều T4,T7</strong>: Nhắc 17h00 — Tiếng Anh 17h30</li>
       </ul>
     </div>
   </div>
 
-  <!-- CHÚ Ý -->
-  <div class="tab-content hidden" id="tab-chu-y">
-    <div class="chu-y">
-      <h3>📝 Giải thích các môn</h3>
-      <ul style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
-        <li><strong>HĐTN</strong>: Hoạt động trải nghiệm</li>
-        <li><strong>GDTC</strong>: Giáo dục thể chất</li>
-        <li><strong>TNXH</strong>: Tự nhiên & Xã hội</li>
-        <li><strong>TBTY</strong>: Thực hành kỹ năng</li>
-        <li><strong>Bài TC</strong>: Bài tập trên lớp</li>
+  <!-- GHI CHÚ -->
+  <div class="tab-content hidden" id="tab-info">
+    <div class="card">
+      <h2>📝 Giải thích</h2>
+      <ul style="line-height: 2; padding-left: 20px;">
+        <li>🏊 <strong>Học bơi</strong>: Thứ 7 & Chủ nhật sáng 6h30–7h30</li>
+        <li>🎹 <strong>Học đàn</strong>: Thứ 3 chiều + Thứ 7 sáng</li>
+        <li>🎨 <strong>Học vẽ</strong>: Chủ nhật sáng 8h00–11h00</li>
+        <li>✍️ <strong>Học chữ</strong>: Thứ 2,5,6 chiều 17h–19h</li>
+        <li>🇬🇧 <strong>Tiếng Anh</strong>: Thứ 4 & Thứ 7 chiều</li>
+        <li>🏫 <strong>Đi học trường</strong>: T2-T4 7h15; T5-T6 7h45</li>
       </ul>
-      <hr style="border:none; border-top:1px solid #ddd; margin:12px 0;">
-      <p><strong>🏫 Trường</strong>: Tiểu học Ngô Quyền — Lớp 1/6</p>
-      <p><strong>📅 Năm học</strong>: 2026–2027</p>
-      <p style="margin-top: 10px; color: #666; font-style: italic;">Cập nhật: 05/10/2026</p>
+      <p style="margin-top: 15px; color: #666; font-style: italic;">✅ Cập nhật: 05/10/2026 — Theo lịch viết tay</p>
     </div>
   </div>
 </div>
 
-<button class="nut-cai-dat" id="nutCaiDat" style="display:none;">📲 Cài đặt App</button>
+<button class="install-btn" id="installBtn">📲 Cài App</button>
 
 <script>
-// ==== DỮ LIỆU LỊCH HỌC ====
-const tenThu = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
-const gioChuan = {
-  thuong: { sang: '07:15', chieu: '13:45' },
-  dacbiet: { 5: '07:45', 6: '07:45' } // Thứ 5, 6 bắt đầu muộn hơn
+const dayNames = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+
+// Dữ liệu sự kiện: [giờ bắt đầu-phút, giờ kết thúc, tên, màu]
+const schedule = {
+  0: [ // CN
+    [390, 450, '🏊 Học bơi bắt đầu!', '#4fc3f7'],
+    [480, 660, '🎨 Học vẽ bắt đầu!', '#ab47bc']
+  ],
+  1: [ // T2
+    [435, 630, '🏫 Đi học trường!', '#66bb6a'],
+    [1020, 1140, '✍️ Học chữ bắt đầu!', '#ffa726']
+  ],
+  2: [ // T3
+    [435, 630, '🏫 Đi học trường!', '#66bb6a'],
+    [990, 1050, '🎹 Học đàn bắt đầu!', '#ef5350']
+  ],
+  3: [ // T4
+    [435, 630, '🏫 Đi học trường!', '#66bb6a'],
+    [1050, 1140, '🇬🇧 Tiếng Anh bắt đầu!', '#42a5f5']
+  ],
+  4: [ // T5
+    [465, 630, '🏫 Đi học trường! (7h45)', '#66bb6a'],
+    [1020, 1140, '✍️ Học chữ bắt đầu!', '#ffa726']
+  ],
+  5: [ // T6
+    [465, 630, '🏫 Đi học trường! (7h45)', '#66bb6a'],
+    [1020, 1140, '✍️ Học chữ bắt đầu!', '#ffa726']
+  ],
+  6: [ // T7
+    [390, 450, '🏊 Học bơi bắt đầu!', '#4fc3f7'],
+    [480, 540, '🎹 Học đàn bắt đầu!', '#ef5350'],
+    [1050, 1140, '🇬🇧 Tiếng Anh bắt đầu!', '#42a5f5']
+  ]
 };
 
-// ==== CẬP NHẬT THỜI GIAN THẾ GIỚI ====
-function capNhatThoiGian() {
+function updateTime() {
   const now = new Date();
-  const gio = now.getHours().toString().padStart(2, '0');
-  const phut = now.getMinutes().toString().padStart(2, '0');
-  const thu = now.getDay(); // 0=CN, 1=T2, 2=T3, 3=T4, 4=T5, 5=T6, 6=T7
-  const ngay = now.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'long' });
-  
-  document.getElementById('gioHienTai').textContent = `${gio}:${phut}`;
-  document.getElementById('ngayHomNay').textContent = ngay;
-  
-  kiemTraNhacNho(thu, parseInt(gio), parseInt(phut));
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const dow = now.getDay(); // 0=CN, 1=T2...6=T7
+  const total = h * 60 + m;
+
+  document.getElementById('clock').textContent = 
+    `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`;
+  document.getElementById('date').textContent = 
+    `${dayNames[dow]}, ${now.toLocaleDateString('vi-VN')}`;
+
+  checkReminder(dow, total);
 }
 
-// ==== KIỂM TRA & NHẮC NHỜ ====
-function kiemTraNhacNho(thu, h, m) {
-  const thongBao = document.getElementById('thongBaoNhac');
-  const noiDung = document.getElementById('noiDungNhac');
-  
-  // Thứ 7 & Chủ nhật nghỉ
-  if (thu === 0 || thu === 6) {
-    thongBao.style.display = 'none';
-    return;
+function checkReminder(dow, now) {
+  const box = document.getElementById('alertBox');
+  const text = document.getElementById('alertText');
+  const events = schedule[dow];
+  let msg = '';
+
+  for (const [start, end, label] of events) {
+    const left = start - now;
+    if (left > 0 && left <= 60) {
+      msg = `⏰ Còn ${Math.floor(left/60)} giờ ${left%60} phút → ${label}`;
+      break;
+    } else if (left >= -10 && left <= 0) {
+      msg = `🔔 Đến giờ rồi! ${label} Nhanh chuẩn bị nhé 💪`;
+      break;
+    }
   }
-  
-  // Xác định giờ bắt đầu
-  let batDauSang = gioChuan.thuong.sang;
-  if (gioChuan.dacbiet[thu]) {
-    batDauSang = gioChuan.dacbiet[thu] + ' giờ';
-  }
-  
-  const phutSang = 7 * 60 + 15; // 7:15
-  const phutSang56 = 7 * 60 + 45; // 7:45
-  const phutChieu = 13 * 60 + 45; // 13:45
-  const hienTai = h * 60 + m;
-  
-  let thongBaoText = '';
-  
-  // Tính thời gian còn lại
-  let batDauSangPhut = (thu === 5 || thu === 6) ? phutSang56 : phutSang;
-  let conLaiSang = batDauSangPhut - hienTai;
-  let conLaiChieu = phutChieu - hienTai;
-  
-  if (conLaiSang > 0 && conLaiSang <= 60) {
-    thongBaoText = `Bắt đầu buổi sáng ${Math.floor(conLaiSang/60)} giờ ${conLaiSang%60} phút nữa! Hãy chuẩn bị đi học nhé 💪`;
-  } else if (conLaiChieu > 0 && conLaiChieu <= 60) {
-    thongBaoText = `Bắt đầu buổi chiều ${Math.floor(conLaiChieu/60)} giờ ${conLaiChieu%60} phút nữa! Chuẩn bị cặp sách 🎒`;
-  } else if (conLaiSang > -15 && conLaiSang <= 0) {
-    thongBaoText = `Đến giờ vào lớp sáng rồi! Nhanh chân đến trường nhé 🏫`;
-  } else if (conLaiChieu > -15 && conLaiChieu <= 0) {
-    thongBaoText = `Đến giờ vào lớp chiều rồi! Đi học đúng giờ nha ⭐`;
-  }
-  
-  if (thongBaoText) {
-    noiDung.textContent = thongBaoText;
-    thongBao.style.display = 'block';
+
+  if (msg) {
+    text.textContent = msg;
+    box.style.display = 'block';
   } else {
-    thongBao.style.display = 'none';
+    box.style.display = 'none';
   }
 }
 
-// ==== TAB ====
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    tab.classList.add('active');
-    document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
+// Tab switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.add('hidden'));
+    t.classList.add('active');
+    document.getElementById('tab-' + t.dataset.tab).classList.remove('hidden');
   });
 });
 
-// ==== PWA CÀI ĐẶT ====
+// PWA install
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('nutCaiDat').style.display = 'block';
+  document.getElementById('installBtn').style.display = 'block';
 });
-document.getElementById('nutCaiDat')?.addEventListener('click', async () => {
+document.getElementById('installBtn').addEventListener('click', async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
     deferredPrompt = null;
-    document.getElementById('nutCaiDat').style.display = 'none';
+    document.getElementById('installBtn').style.display = 'none';
   }
 });
 
-// ==== CHẠY ====
-capNhatThoiGian();
-setInterval(capNhatThoiGian, 30000); // Cập nhật mỗi 30 giây
+updateTime();
+setInterval(updateTime, 30000);
 </script>
 </body>
 </html>
